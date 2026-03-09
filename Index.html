@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌿 Buea sprawl · e‑commerce demo</title>
+  <!-- simple style - no frameworks, pure HTML/CSS/JS -->
+  <style>
+    /* ----- RESET & GLOBAL ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background: #f4f6fa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ----- HEADER / NAV (flex & semantics) ----- */
+    .site-header {
+      background: #1e2b3c;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+    .logo span {
+      font-weight: 200;
+      color: #9ab9d8;
+      font-size: 1rem;
+      margin-left: 0.2rem;
+    }
+
+    .cart-control {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .cart-control button {
+      background: none;
+      border: 1px solid #7895b8;
+      color: white;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .cart-control button:hover {
+      background: #2d4055;
+      border-color: #b7cdff;
+    }
+    #cart-count {
+      background: #e07c4c;
+      border-radius: 30px;
+      padding: 0.2rem 0.8rem;
+      font-weight: 600;
+    }
+
+    /* ----- HERO / BANNER (CSS grid) ----- */
+    .hero {
+      background: linear-gradient(120deg, #d4e0f0 0%, #b8cbe0 100%);
+      margin: 1.5rem 2rem 0.5rem 2rem;
+      border-radius: 28px;
+      padding: 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      box-shadow: 0 8px 12px rgba(0,0,0,0.02);
+    }
+    .hero-text h2 {
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: #17212b;
+    }
+    .hero-text p {
+      font-size: 1.2rem;
+      color: #2c3d54;
+      margin-top: 0.5rem;
+    }
+    .hero-emoji {
+      font-size: 4rem;
+      background: #ffffff70;
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ----- MAIN LAYOUT (grid + cards) ----- */
+    .shop-section {
+      margin: 1rem 2rem;
+      flex: 1;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 350;
+      color: #1f2b38;
+      border-left: 8px solid #e07c4c;
+      padding-left: 1.2rem;
+      margin: 2rem 0 1.5rem 0;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+
+    /* product card */
+    .product-card {
+      background: white;
+      border-radius: 24px;
+      padding: 1.8rem 1.2rem 1.5rem 1.2rem;
+      box-shadow: 0 12px 24px -12px rgba(0, 20, 40, 0.2);
+      transition: transform 0.15s ease, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border: 1px solid #e9edf4;
+    }
+
+      .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 30px -16px #1e2b3c55;
+    }
+
+    .product-emoji {
+      font-size: 4.2rem;
+      background: #f0f4fc;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .product-card h3 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #1d2b3b;
+    }
+
+    .product-desc {
+      color: #4a5e74;
+      margin: 0.6rem 0;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .product-price {
+      font-size: 1.7rem;
+      font-weight: 300;
+      color: #2b4b6e;
+      margin: 0.75rem 0 1rem 0;
+    }
+    .product-price small {
+      font-size: 1rem;
+      color: #5e707e;
+    }
+
+    .add-to-cart {
+      background: white;
+      border: 2px solid #1e2b3c;
+      color: #1e2b3c;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.75rem 0;
+      width: 100%;
+      border-radius: 48px;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .add-to-cart:hover {
+      background: #1e2b3c;
+      color: white;
+      border-color: #1e2b3c;
+    }
+
+    /* mini cart / modal (javascript driven) */
+    .cart-sidebar {
+      background: #ffffffec;
+      backdrop-filter: blur(8px);
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 380px;
+      height: 100vh;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+      padding: 2rem 1.5rem;
+      transition: right 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid #cddae9;
+    }
+
+    .cart-sidebar.open {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #dee7f2;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cart-header h2 {
+      font-weight: 400;
+      color: #13202e;
+    }
+
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 2.2rem;
+      line-height: 1;
+      cursor: pointer;
+      color: #4e627c;
+      padding: 0 0.5rem;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cart-item {
+      background: #f2f6fd;
+      border-radius: 28px;
+      padding: 0.9rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1rem;
+      border: 1px solid #dde3ed;
+    }
+
+    .cart-item-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-item-title {
+      font-weight: 600;
+      color: #142434;
+    }
+
+    .cart-item-price {
+      font-size: 0.95rem;
+      color: #617e9e;
+    }
+
+    .cart-item-remove {
+      background: #f0d8d0;
+      border: none;
+      border-radius: 40px;
+      padding: 0.2rem 1rem;
+      color: #b3472b;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .cart-item-remove:hover {
+      background: #dfb8aa;
+    }
+
+    .cart-total {
+      border-top: 2px solid #cddae9;
+      padding-top: 1.2rem;
+      font-size: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 350;
+      color: #132634;
+      margin-top: 0.5rem;
+    }
+
+    .checkout-btn {
+      background: #1e2b3c;
+      color: white;
+      border: none;
+      border-radius: 60px;
+      padding: 1rem;
+      font-size: 1.2rem;
+      margin-top: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .checkout-btn:hover {
+      background: #2f4057;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.2);
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.2s;
+      z-index: 900;
+    }
+
+    .overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* empty cart message */
+    .empty-cart-msg {
+      color: #72869b;
+      text-align: center;
+      margin-top: 3rem;
+      font-style: italic;
+    }
+
+    /* footer */
+    .site-footer {
+      background: #d7e2f0;
+      margin-top: 3rem;
+      padding: 2rem;
+      text-align: center;
+      color: #203144;
+      border-top: 1px solid #b1c6dc;
+    }
+
+    /* responsive touch */
+    @media (max-width: 600px) {
+      .hero {
+        grid-template-columns: 1fr;
+        margin: 1rem;
+        padding: 1.8rem;
+        gap: 1rem;
+      }
+      .hero-emoji {
+        width: fit-content;
+      }
+      .cart-sidebar {
+        width: 100%;
+        right: -100%;
+      }
+      .site-header {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <h1>urban&nbsp;sprawl <span>· essentials</span></h1>
+    </div>
+    <div class="cart-control">
+      <button id="cart-toggle" aria-label="Shopping cart">
+        <span>🛒</span> <span>cart</span> <span id="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- hero / promo grid -->
+  <section class="hero">
+    <div class="hero-text">
+      <h2>everyday carry, reimagined</h2>
+      <p>clean design · functional · carbon neutral</p>
+    </div>
+    <div class="hero-emoji">
+      ♻️ 🌿
+    </div>
+  </section>
+
+  <!-- main product grid -->
+  <main class="shop-section">
+    <h2 class="section-title">latest drops</h2>
+    <div class="product-grid" id="product-grid">
+      <!-- products injected via JS but also present as fallback / static demo (we still generate via js for cart binding) -->
+    </div>
+  </main>
+
+  <!-- aside floating cart -->
+  <aside class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <h2>your cart 🛍️</h2>
+      <button class="close-cart" id="close-cart-btn">&times;</button>
+    </div>
+    <ul class="cart-items" id="cart-items-list">
+      <!-- dynamic -->
+    </ul>
+    <div class="cart-total">
+      <span>total</span> <span id="cart-total-amount">$0</span>
+    </div>
+    <button class="checkout-btn" id="checkout-sim">checkout →</button>
+  </aside>
+
+  <!-- overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <footer class="site-footer">
+    <p>🧪 html / css / javascript e‑commerce demo — all interactions client side</p>
+  </footer>
+
+  <script>
+    (function() {
+      // ----- data store (simulate products) -----
+      const products = [
+        { id: 'p1', name: 'arc' , description: 'magnetic utility pouch', price: 39, emoji: '🧰' },
+        { id: 'p2', name: 'orbit' , description: 'rechargeable carry light', price: 28, emoji: '🔦' },
+        { id: 'p3', name: 'vault' , description: 'rfid card holder · aluminum', price: 45, emoji: '💳' },
+        { id: 'p4', name: 'strata' , description: 'canvas tool roll', price: 58, emoji: '📁' },
+        { id: 'p5', name: 'bridge' , description: 'keychain multitool', price: 22, emoji: '🔧' },
+        { id: 'p6', name: 'nomad' , description: 'waterproof hip sack', price: 64, emoji: '🎒' }
+      ];
+
+      // cart state
+      let cart = [];
+
+      // DOM elements
+      const productGrid = document.getElementById('product-grid');
+      const cartToggle = document.getElementById('cart-toggle');
+      const cartSidebar = document.getElementById('cart-sidebar');
+      const closeCartBtn = document.getElementById('close-cart-btn');
+      const overlay = document.getElementById('overlay');
+      const cartItemsList = document.getElementById('cart-items-list');
+      const cartTotalSpan = document.getElementById('cart-total-amount');
+      const cartCountSpan = document.getElementById('cart-count');
+      const checkoutBtn = document.getElementById('checkout-sim');
+
+      // render all product cards from product array (HTML)
+      function renderProducts() {
+        if (!productGrid) return;
+        productGrid.innerHTML = ''; 
+        products.forEach(prod => {
+          const card = document.createElement('article');
+          card.className = 'product-card';
+          card.dataset.id = prod.id;
+
+          card.innerHTML = `
+            <div class="product-emoji">${prod.emoji}</div>
+            <h3>${prod.name}</h3>
+            <p class="product-desc">${prod.description}</p>
+            <div class="product-price"><small>$</small>${prod.price}</div>
+            <button class="add-to-cart" data-id="${prod.id}" data-name="${prod.name}" data-price="${prod.price}" data-emoji="${prod.emoji}">
+              <span>➕</span> add to cart
+            </button>
+          `;
+          productGrid.appendChild(card);
+        });
+      }
+
+      // update cart UI (list, total, count)
+      function updateCartUI() {
+        // update cart count badge
+        const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+        cartCountSpan.textContent = totalItems;
+
+        // build cart items html
+        if (cartItemsList) {
+          if (cart.length === 0) {
+            cartItemsList.innerHTML = `<li class="empty-cart-msg">your cart is empty 🌫️</li>`;
+          } else {
+            let itemsHtml = '';
+            cart.forEach(item => {
+              itemsHtml += `
+                <li class="cart-item" data-id="${item.id}">
+                  <div class="cart-item-info">
+                    <span class="cart-item-title">${item.emoji || '📦'} ${item.name}  x${item.qty}</span>
+                    <span class="cart-item-price">$${item.price * item.qty}</span>
+                  </div>
+                  <button class="cart-item-remove" data-id="${item.id}" data-action="remove">remove</button>
+                </li>
+              `;
+            });
+            cartItemsList.innerHTML = itemsHtml;
+          }
+        }
+
+        // total price
+        const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        if (cartTotalSpan) cartTotalSpan.textContent = `$${totalAmount}`;
+
+        // attach remove event to each remove button (delegation later, but we can attach also inside loop after innerHTML, but better use event delegation)
+        // event delegation will be used from parent container (cartItemsList)
+      }
+
+      // add product to cart
+      function addToCart(productId, productName, productPrice, productEmoji = '📦') {
+        const existing = cart.find(item => item.id === productId);
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          cart.push({
+            id: productId,
+            name: productName,
+            price: productPrice,
+            qty: 1,
+            emoji: productEmoji
+          });
+        }
+        updateCartUI();
+        // optional: open cart slightly to give feedback
+        openCart();
+      }
+
+      // remove item (full decrement / delete if qty becomes zero)
+      function removeFromCart(productId) {
+        const index = cart.findIndex(item => item.id === productId);
+        if (index !== -1) {
+          if (cart[index].qty > 1) {
+            cart[index].qty -= 1;
+          } else {
+            cart.splice(index, 1);
+          }
+        }
+        updateCartUI();
+      }
+
+      // open / close cart
+      function openCart() {
+        cartSidebar.classList.add('open');
+        overlay.classList.add('visible');
+      }
+
+      function closeCart() {
+        cartSidebar.classList.remove('open');
+        overlay.classList.remove('visible');
+      }
+
+      // ----- event listeners -----
+      // product grid "add to cart" via delegation
+      productGrid.addEventListener('click', (e) => {
+        const addButton = e.target.closest('.add-to-cart');
+        if (!addButton) return;
+
+        const id = addButton.dataset.id;
+        const name = addButton.dataset.name;
+        const price = parseInt(addButton.dataset.price, 10);
+        const emoji = addButton.dataset.emoji || '🛒';
+        addToCart(id, name, price, emoji);
+      });
+
+      // cart items list delegation (for remove buttons)
+      cartItemsList.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.cart-item-remove');
+        if (removeBtn) {
+          const productId = removeBtn.dataset.id;
+          if (productId) removeFromCart(productId);
+        }
+      });
+
+      // open cart via header button
+      cartToggle.addEventListener('click', openCart);
+
+      // close via close button
+      closeCartBtn.addEventListener('click', closeCart);
+      overlay.addEventListener('click', closeCart);
+
+      // checkout sim (just alert + reset for demo)
+      checkoutBtn.addEventListener('click', () => {
+        if (cart.length === 0) {
+          alert('your cart is empty — add some goodies first :)');
+          return;
+        }
+        alert(`✨ demo checkout — total $${cart.reduce((s, i) => s + i.price * i.qty, 0)} . thanks! (cart will reset)`);
+        cart = []; // reset after fake checkout
+        updateCartUI();
+        closeCart();
+      });
+
+      // ESC key close
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && cartSidebar.classList.contains('open')) {
+          closeCart();
+        }
+      });
+
+      // initial rendering
+      renderProducts();
+      updateCartUI();
+    })();
+  </script>
+</body>
+</html>
