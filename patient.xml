@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<!DOCTYPE clinic SYSTEM "clinic.dtd">
+<clinic name="City Medical Center">
+  <clinic-info>
+    <address>123 Health Street, Medical District</address>
+    <phone>+237 671504071</phone>
+    <license>MC-2024-7890</license>
+  </clinic-info>
+  
+  <departments>
+    <department id="CARD" head="Dr. Sarah Johnson">
+      <name>Cardiology</name>
+      <location>Building A, Floor 3</location>
+    </department>
+    <department id="PED" head="Dr. Michael Chen">
+      <name>Pediatrics</name>
+      <location>Building B, Floor 1</location>
+    </department>
+    <department id="ORTH" head="Dr. Robert Williams">
+      <name>Orthopedics</name>
+      <location>Building A, Floor 2</location>
+    </department>
+    <department id="DERM" head="Dr. Emily Brown">
+      <name>Dermatology</name>
+      <location>Building C, Floor 1</location>
+    </department>
+  </departments>
+  
+  <patients>
+    <patient id="P001">
+      <personal-info>
+        <name>John Doe</name>
+        <age>45</age>
+        <gender>Male</gender>
+        <blood-type>A+</blood-type>
+        <contact>
+          <phone>555-1234</phone>
+          <email>john.doe@email.com</email>
+          <address>123 Main St, Apt 4B</address>
+        </contact>
+      </personal-info>
+      <medical-history>
+        <condition date="2023-01-15">Hypertension</condition>
+        <condition date="2023-06-20">Type 2 Diabetes</condition>
+        <allergy>Penicillin</allergy>
+        <allergy>Sulfa drugs</allergy>
+      </medical-history>
+      <current-status>Active</current-status>
+      <insurance provider="Blue Cross" policy-number="BC-987654"/>
+    </patient>
+    
+    <patient id="P002">
+      <personal-info>
+        <name>perez fonsoh</name>
+        <age>24</age>
+        <gender>Male</gender>
+        <blood-type>O-</blood-type>
+        <contact>
+          <phone>+237 671504071</phone>
+          <email>perez.fonsoh@email.com</email>
+          <address>Buea</address>
+        </contact>
+      </personal-info>
+      <medical-history>
+        <condition date="2023-03-10">Asthma</condition>
+        <allergy>Pollen</allergy>
+        <allergy>Dust mites</allergy>
+      </medical-history>
+      <current-status>Active</current-status>
+      <insurance provider="Aetna" policy-number="AE-123456"/>
+    </patient>
+    
+    <patient id="P003">
+      <personal-info>
+        <name>Robert Johnson</name>
+        <age>28</age>
+        <gender>Male</gender>
+        <blood-type>B+</blood-type>
+        <contact>
+          <phone>673885471</phone>
+          <email>robert.j@email.com</email>
+          <address>Limbe</address>
+        </contact>
+      </personal-info>
+      <medical-history>
+        <condition date="2024-01-05">Fractured ankle</condition>
+        <surgery date="2024-01-10">Ankle reconstruction</surgery>
+      </medical-history>
+      <current-status>Recovery</current-status>
+      <insurance provider="Cigna" policy-number="CG-456789"/>
+    </patient>
+  </patients>
+  
+  <appointments>
+    <appointment id="APP001">
+      <patient-id>P001</patient-id>
+      <doctor>Dr. Sarah Johnson</doctor>
+      <department>CARD</department>
+      <date>2024-03-25</date>
+      <time>10:30 AM</time>
+      <status>Scheduled</status>
+      <reason>Blood pressure check</reason>
+    </appointment>
+    
+    <appointment id="APP002">
+      <patient-id>P002</patient-id>
+      <doctor>Dr. Emily Brown</doctor>
+      <department>DERM</department>
+      <date>2024-03-26</date>
+      <time>2:15 PM</time>
+      <status>Scheduled</status>
+      <reason>Skin rash consultation</reason>
+    </appointment>
+    
+    <appointment id="APP003">
+      <patient-id>P003</patient-id>
+      <doctor>Dr. Robert Williams</doctor>
+      <department>ORTH</department>
+      <date>2024-03-24</date>
+      <time>9:00 AM</time>
+      <status>Completed</status>
+      <reason>Post-surgery follow-up</reason>
+    </appointment>
+    
+    <appointment id="APP004">
+      <patient-id>P001</patient-id>
+      <doctor>Dr. Michael Chen</doctor>
+      <department>PED</department>
+      <date>2024-03-27</date>
+      <time>11:00 AM</time>
+      <status>Scheduled</status>
+      <reason>Annual checkup - child</reason>
+    </appointment>
+  </appointments>
+  
+  <statistics>
+    <total-patients>3</total-patients>
+    <total-appointments>4</total-appointments>
+    <active-patients>3</active-patients>
+    <last-updated>2024-03-15</last-updated>
+  </statistics>
+</clinic>
